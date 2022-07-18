@@ -7,7 +7,9 @@ package Logica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +20,7 @@ public class conexion {
     public String db="basereserva";
     public String url="jdbc:mysql://localhost/"+db;
     public String user = "root";
-    public String pass = "hp48g2010";
+    public String pass = "";
     
     
     public conexion(){
@@ -26,14 +28,17 @@ public class conexion {
     }
     
     public Connection conectar() {
-        Connection link = null;
-        try{
-            Class.forName("com.mysql.jdbc.Driver");           
-            link = DriverManager.getConnection(this.url, this.user, this.pass);
-        }catch (Exception e){
-            e.printStackTrace();
+        Connection connection=null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("show databases;");
+            System.out.println("Connected");
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        return link;
+        return connection;
     }
     
 }     
